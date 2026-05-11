@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <button id="close-btn" onclick="window.counterService.quit()">✕</button>
+    <div class="card">
+        <h1>Counter</h1>
+        <p id="counter">0</p>
+        <div class="buttons">
+            <button id="decrement" onclick="subtract()">−</button>
+            <button id="increment" onclick="add()">+</button>
+            <button id="reset" onclick="reset()">Reset</button>
+        </div>
+    </div>
+
+    <script>
+
+        function updateDisplay(value) {
+            const counter = document.getElementById("counter");
+            counter.innerText = value;
+            counter.classList.toggle("negative", value < 0);
+        }
+
+        async function add() {
+            const newValue = await window.counterService.add();
+            updateDisplay(newValue);
+        }
+
+        async function subtract() {
+            const newValue = await window.counterService.subtract();
+            updateDisplay(newValue);
+        }
+
+        async function reset() {
+            const newValue = await window.counterService.reset();
+            updateDisplay(newValue);
+        }
+
+        async function getCurrentValue() {
+            const currentValue = await window.counterService.get();
+            updateDisplay(currentValue);
+        }
+
+        getCurrentValue();
+
+    </script>
+</body>
+
+</html>

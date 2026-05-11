@@ -1,0 +1,8 @@
+.value {
+  font-size: 5rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 32px;
+  line-height: 1;
+  min-width: 3ch;
+}

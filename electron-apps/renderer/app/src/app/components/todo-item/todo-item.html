@@ -1,0 +1,11 @@
+<li class="todo-item">
+<!-- Checkbox : cochée selon todo.done, émet toggle au changement -->
+<input
+type="checkbox"
+[checked]="todo.done"
+(change)="onToggle()">
+<!-- Texte : classe 'done' appliquée si todo.done est true -->
+<span [class.done]="todo.done">{{ todo.text }}</span>
+<!-- Bouton supprimer -->
+ <button (click)="onDelete()">×</button>
+</li>

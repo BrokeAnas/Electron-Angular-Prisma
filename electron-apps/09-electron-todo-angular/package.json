@@ -1,0 +1,17 @@
+{
+  "name": "electron-todo-angular",
+  "version": "1.0.0",
+  "description": "Todo Electron avec Angular comme frontend",
+  "license": "ISC",
+  "author": "Nicolas Wattiaux",
+  "type": "commonjs",
+  "main": "main.js",
+  "scripts": {
+    "start": "npm run build:angular &&  npx electron .",
+    "start:dev": "npx electron .",
+    "build:angular": "cd renderer/app && ng build"
+  },
+  "devDependencies": {
+    "electron": "^41.1.1"
+  }
+}

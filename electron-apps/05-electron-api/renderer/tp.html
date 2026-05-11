@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Météo</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="card">
+        <h1>Météo</h1>
+
+        <!--
+            Exercice : appel API externe via IPC
+            Le renderer ne fait jamais de fetch directement.
+            Il passe par window.api.getMeteo(ville) → preload → main → fetch.
+        -->
+        <div class="meteo-input">
+            <input id="ville" type="text" placeholder="Bruxelles" />
+            <button id="btn-meteo" onclick="chercherMeteo()">Voir</button>
+        </div>
+        <p id="meteo-resultat" class="meteo-resultat">—</p>
+    </div>
+
+    <script>
+
+        async function chercherMeteo() {
+            const ville = document.getElementById('ville').value.trim();
+            const resultat = document.getElementById('meteo-resultat');
+
+            if (!ville) return;
+
+            resultat.textContent = 'Chargement...';
+
+            try {
+                // window.api.getMeteo est défini dans preload.js
+                // Il appelle ipcRenderer.invoke('api:meteo', ville)
+                // Le main reçoit la ville, fait le fetch, et retourne les données
+                const data = await window.api.getMeteo(ville);
+
+                // data contient : { temperature, windspeed, weathercode, ... }
+                resultat.textContent = `${ville} : ${data.temperature}°C — vent ${data.windspeed} km/h`;
+            } catch (err) {
+                // Si la ville n'existe pas, le main lève une erreur qu'on attrape ici
+                resultat.textContent = `Erreur : ${err.message}`;
+            }
+        }
+
+        // Déclenche la recherche avec la touche Entrée
+        document.getElementById('ville').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') chercherMeteo();
+        });
+
+    </script>
+</body>
+
+</html>

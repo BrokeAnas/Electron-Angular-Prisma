@@ -1,0 +1,26 @@
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 48px 64px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  min-width: 320px;
+}
+
+h1 {
+  font-size: 1.2rem;
+  color: #666;
+  font-weight: 500;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.badge {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  background: #f8fafc;
+  padding: 6px 12px;
+  border-radius: 99px;
+  display: inline-block;
+}

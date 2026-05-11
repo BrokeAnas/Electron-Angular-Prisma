@@ -1,0 +1,5 @@
+node_modules/
+dist/
+renderer/app/dist/
+renderer/app/node_modules/
+counter.json

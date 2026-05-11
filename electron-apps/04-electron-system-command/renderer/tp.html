@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Commands</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <button id="close-btn" onclick="window.systemService.quit()">✕</button>
+
+  <div class="card">
+    <h1>System Commands</h1>
+    <p id="os-label">Détection de l'OS...</p>
+
+    <div class="buttons">
+      <button onclick="run('hostname')">Hostname</button>
+      <button onclick="run('username')">Utilisateur</button>
+      <button onclick="run('listDesktop')">Bureau</button>
+      <button onclick="run('diskSpace')">Disque</button>
+      <button class="terminal-btn" onclick="run('openTerminal')">Ouvrir Terminal</button>
+    </div>
+
+    <pre id="output">Clique sur une commande pour voir le résultat.</pre>
+  </div>
+
+  <script>
+    // Affiche l'OS au chargement
+    async function init() {
+      const os = await window.systemService.getOS();
+      document.getElementById('os-label').textContent = `OS détecté : ${os}`;
+    }
+
+    // Appelle la méthode correspondante et affiche le résultat
+    async function run(command) {
+      const output = document.getElementById('output');
+      output.textContent = '...';
+      try {
+        const result = await window.systemService[command]();
+        output.textContent = result;
+      } catch (err) {
+        output.textContent = `Erreur : ${err.message}`;
+        output.classList.add('error');
+        return;
+      }
+      output.classList.remove('error');
+    }
+
+    init();
+  </script>
+
+</body>
+</html>

@@ -3,3 +3,9 @@ node_modules/
 **/.git
 **/.git.backup
 electron-apps/electron-apps/
+
+# Ignore nested Git metadata and duplicate project copy
+electron-apps/.git
+**/.git.backup
+electron-apps/electron-apps/
+electron-apps/node_modules/

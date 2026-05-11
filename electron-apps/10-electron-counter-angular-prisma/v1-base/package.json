@@ -1,0 +1,21 @@
+{
+  "name": "electron-counter-v1-base",
+  "version": "1.0.0",
+  "description": "Compteur Electron + Angular — persistance en fichier JSON",
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "main": "dist/main.js",
+  "scripts": {
+    "build:electron": "tsc",
+    "build:angular": "cd renderer/app && ng build",
+    "build": "npm run build:electron && npm run build:angular",
+    "start": "npm run build && npx electron .",
+    "start:dev": "npx electron ."
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "electron": "^33.0.0",
+    "typescript": "^5.6.0"
+  }
+}

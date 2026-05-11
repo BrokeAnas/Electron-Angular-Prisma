@@ -1,0 +1,13 @@
+/* ─── Reset et base ──────────────────────────────────────────── */
+* {
+box-sizing: border-box;
+}
+body {
+font-family: sans-serif;
+max-width: 500px;
+margin: 40px auto;
+padding: 0 16px;
+}
+h1 {
+}
+margin-bottom: 16px

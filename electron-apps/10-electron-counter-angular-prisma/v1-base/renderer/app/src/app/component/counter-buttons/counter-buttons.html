@@ -1,0 +1,7 @@
+<div class="buttons">
+  <!-- Les boutons n'appellent pas directement les services.
+       Ils émettent des @Output vers App, qui décide quoi faire. -->
+  <button class="btn-secondary" (click)="onDecrement()">−</button>
+  <button class="btn-reset"     (click)="onReset()">Réinitialiser</button>
+  <button class="btn-primary"   (click)="onIncrement()">+</button>
+</div>

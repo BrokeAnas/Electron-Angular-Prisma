@@ -1,0 +1,89 @@
+body {
+  font-family: sans-serif;
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.zone-saisie {
+  display: flex;
+  gap: 8px;
+  margin: 20px 0;
+}
+
+input[type="number"],
+input[type="text"] {
+  flex: 1;
+  padding: 8px;
+  font-size: 1.1rem;
+}
+
+button {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+#feedback {
+  font-size: 1.2rem;
+  font-weight: bold;
+  min-height: 30px;
+}
+
+#feedback.trop_grand {
+  color: red;
+}
+
+#feedback.trop_petit {
+  color: orange;
+}
+
+#feedback.gagne {
+  color: green;
+}
+
+#historique {
+  margin-top: 20px;
+  list-style: none;
+  padding: 0;
+}
+
+#historique li {
+  padding: 4px 0;
+  border-bottom: 1px solid #eee;
+  color: #555;
+}
+
+#btn-nouvelle-partie {
+  display: none;
+  margin-top: 12px;
+  width: 100%;
+}
+
+#section-score {
+  display: none;
+  margin-top: 24px;
+  border-top: 1px solid #ddd;
+  padding-top: 16px;
+}
+
+#liste-scores {
+  padding: 0;
+  list-style: none;
+}
+
+#liste-scores li {
+  padding: 4px 0;
+}
+
+/* ATTENTION : cet encadré est pédagogique — à retirer en prod */
+.warning-dev {
+  background: #d1ecf1;
+  border: 1px solid #bee5eb;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 0.85rem;
+}

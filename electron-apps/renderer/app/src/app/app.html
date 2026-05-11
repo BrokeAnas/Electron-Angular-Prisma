@@ -1,0 +1,38 @@
+<h1>Todo</h1>
+<!-- Formulaire d'ajout -->
+<div class="input-row">
+<!--
+[value]="newText()" : affiche la valeur du signal dans le champ
+(input)="..." : met à jour le signal quand l'utilisateur tape
+-->
+<input
+type="text"
+[value]="newText()"
+(input)="newText.set($any($event.target).value)"
+placeholder="Nouvelle tâche…"
+(keydown.enter)="add()">
+<button (click)="add()">Ajouter</button>
+</div>
+<!-- Liste des tâches -->
+<ul id="todo-list">
+<!--
+@for répète le composant pour chaque todo dans todos()
+track todo.id : indique à Angular comment identifier chaque élément
+(optimise les mises à jour — seuls les éléments
+modifiés sont re-rendus)
+[todo]="todo" : passe le todo au @Input du composant enfant
+(toggled)="toggle($event)" : reçoit l'id émis par @Output toggled
+(deleted)="delete($event)" : reçoit l'id émis par @Output deleted
+-->
+@for (todo of todos(); track todo.id) {
+<app-todo-item
+[todo]="todo"
+(toggled)="toggle($event)"
+(deleted)="delete($event)">
+</app-todo-item>
+}
+@empty {
+<!-- @empty : affiché automatiquement si la liste est vide -->
+<p class="empty">Aucune tâche pour l'instant !</p>
+}
+</ul>

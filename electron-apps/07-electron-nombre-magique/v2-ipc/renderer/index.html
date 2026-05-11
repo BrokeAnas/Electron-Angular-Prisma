@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Devine le Nombre — V2 IPC</title>
+  <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+
+  <div class="warning-dev">
+    <strong>Version 2 — IPC</strong><br>
+    Ouvre la console (F12) et tape <code>window.guessService.secret</code>. Résultat : <code>undefined</code>.<br>
+    Le nombre secret est dans <code>main.js</code> — inaccessible depuis ici.
+  </div>
+
+  <h1>Devine le Nombre</h1>
+  <p>Je pense à un nombre entre <strong>1</strong> et <strong>100</strong>.</p>
+
+  <div class="zone-saisie">
+    <input type="number" id="input-nombre" min="1" max="100" placeholder="Ton nombre...">
+    <button id="btn-valider">Valider</button>
+  </div>
+
+  <p id="feedback"></p>
+  <p id="compteur">Essais : 0</p>
+
+  <ul id="historique"></ul>
+
+  <button id="btn-nouvelle-partie">Nouvelle partie</button>
+
+  <!-- Section score : visible uniquement après une victoire -->
+  <div id="section-score">
+    <h3>Sauvegarder ton score</h3>
+    <div class="zone-saisie">
+      <input type="text" id="input-nom" placeholder="Ton prénom...">
+      <button id="btn-save-score">Sauvegarder</button>
+    </div>
+    <h3>Top 5</h3>
+    <ul id="liste-scores"></ul>
+  </div>
+
+  <!-- app.js contient toute la logique renderer — chargé en dernier -->
+  <script src="script/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "electron-all",
+  "version": "1.0.0",
+  "description": "Démo multi-preloads : compteur, commandes système, météo",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "^41.1.0"
+  }
+}

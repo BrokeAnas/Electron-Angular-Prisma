@@ -1,0 +1,92 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #1a1a2e;
+    color: #eee;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    background: #16213e;
+    border: 1px solid #0f3460;
+    border-radius: 16px;
+    padding: 48px 64px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+h1 {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #a0aec0;
+    margin-bottom: 24px;
+}
+
+#counter {
+    font-size: 96px;
+    font-weight: 700;
+    line-height: 1;
+    color: #e94560;
+    margin-bottom: 40px;
+    min-width: 160px;
+    transition: color 0.2s;
+}
+
+#counter.negative {
+    color: #718096;
+}
+
+.buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+button {
+    padding: 12px 28px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s, opacity 0.2s;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+#increment {
+    background: #0f3460;
+    color: #fff;
+}
+
+#increment:hover { opacity: 0.85; }
+
+#decrement {
+    background: #0f3460;
+    color: #fff;
+}
+
+#decrement:hover { opacity: 0.85; }
+
+#reset {
+    background: transparent;
+    color: #718096;
+    border: 1px solid #2d3748;
+}
+
+#reset:hover {
+    background: #2d3748;
+    color: #eee;
+}

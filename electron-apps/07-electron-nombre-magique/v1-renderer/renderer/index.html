@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Devine le Nombre — V1 Renderer</title>
+  <link rel="stylesheet" href="style/style.css">
+</head>
+
+<body>
+
+  <div class="warning-dev">
+    <strong>Version 1 — Renderer only</strong><br>
+    Active la console dans le main.js et tape <code>secret</code>. Tu vois le nombre mystère.<br>
+    C'est le problème que la V2 résout.
+  </div>
+
+  <h1>Devine le Nombre</h1>
+  <p>Je pense à un nombre entre <strong>1</strong> et <strong>100</strong>.</p>
+
+  <div class="zone-saisie">
+    <input type="number" id="input-nombre" min="1" max="100" placeholder="Ton nombre...">
+    <button id="btn-valider">Valider</button>
+  </div>
+
+  <p id="feedback"></p>
+  <p id="compteur">Essais : 0</p>
+
+  <ul id="historique"></ul>
+
+  <button id="btn-nouvelle-partie">Nouvelle partie</button>
+
+  <script src="script/app.js"></script>
+</body>
+
+</html>

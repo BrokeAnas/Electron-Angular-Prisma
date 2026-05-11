@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electron All</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <button id="close-btn" onclick="window.appService.quit()">✕</button>
+
+  <!-- Navigation semi-transparente -->
+  <nav>
+    <button class="nav-btn active" onclick="showSection('counter', this)">Compteur</button>
+    <button class="nav-btn" onclick="showSection('system', this)">Commandes</button>
+    <button class="nav-btn" onclick="showSection('meteo', this)">Météo</button>
+  </nav>
+
+  <!-- ── Section Compteur ── -->
+  <section id="section-counter" class="section active">
+    <div class="card">
+      <h1>Compteur</h1>
+      <p id="counter-value">0</p>
+      <div class="buttons">
+        <button onclick="counterSubtract()">−</button>
+        <button onclick="counterAdd()">+</button>
+        <button class="btn-reset" onclick="counterReset()">Reset</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Section Commandes système ── -->
+  <section id="section-system" class="section">
+    <div class="card">
+      <h1>Commandes système</h1>
+      <p id="os-label"></p>
+      <div class="buttons">
+        <button onclick="sysRun('hostname')">Hostname</button>
+        <button onclick="sysRun('username')">Utilisateur</button>
+        <button onclick="sysRun('diskSpace')">Disque</button>
+        <button class="btn-reset" onclick="sysRun('openTerminal')">Ouvrir Terminal</button>
+      </div>
+      <pre id="sys-output">Clique sur une commande.</pre>
+    </div>
+  </section>
+
+  <!-- ── Section Météo ── -->
+  <section id="section-meteo" class="section">
+    <div class="card">
+      <h1>Météo</h1>
+      <div class="input-row">
+        <input id="ville-input" type="text" placeholder="Bruxelles" />
+        <button onclick="fetchMeteo()">Chercher</button>
+      </div>
+      <div id="meteo-result"></div>
+    </div>
+  </section>
+
+  <script>
+    // ── Navigation ──────────────────────────────────────────
+    function showSection(name, btn) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('section-' + name).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    // ── Compteur ─────────────────────────────────────────────
+    function updateCounter(value) {
+      const el = document.getElementById('counter-value');
+      el.textContent = value;
+      el.classList.toggle('negative', value < 0);
+    }
+
+    async function counterAdd()      { updateCounter(await window.counterService.add()); }
+    async function counterSubtract() { updateCounter(await window.counterService.subtract()); }
+    async function counterReset()    { updateCounter(await window.counterService.reset()); }
+
+    async function initCounter() {
+      updateCounter(await window.counterService.get());
+    }
+
+    // ── Commandes système ────────────────────────────────────
+    async function sysRun(command) {
+      const output = document.getElementById('sys-output');
+      output.textContent = '...';
+      output.classList.remove('error');
+      try {
+        output.textContent = await window.systemService[command]();
+      } catch (err) {
+        output.textContent = `Erreur : ${err.message}`;
+        output.classList.add('error');
+      }
+    }
+
+    async function initSystem() {
+      const os = await window.systemService.getOS();
+      document.getElementById('os-label').textContent = `OS : ${os}`;
+    }
+
+    // ── Météo ─────────────────────────────────────────────────
+    async function fetchMeteo() {
+      const ville = document.getElementById('ville-input').value.trim() || 'Bruxelles';
+      const result = document.getElementById('meteo-result');
+      result.textContent = '...';
+      result.className = '';
+      try {
+        const data = await window.api.getMeteo(ville);
+        result.innerHTML =
+          `<span class="meteo-temp">${data.temperature}°C</span>` +
+          `<span class="meteo-wind">Vent : ${data.windspeed} km/h</span>`;
+      } catch (err) {
+        result.textContent = err.message;
+        result.className = 'error';
+      }
+    }
+
+    // ── Init ──────────────────────────────────────────────────
+    initCounter();
+    initSystem();
+  </script>
+
+</body>
+</html>

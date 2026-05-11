@@ -1,0 +1,25 @@
+# Dépendances Node.js — à réinstaller avec npm install
+**/node_modules/
+
+# Fichiers système
+**/.DS_Store
+Thumbs.db
+
+# Build / distribution
+**/dist/
+**/out/
+
+# Logs
+**/*.log
+**/npm-debug.log*
+
+# Variables d'environnement
+**/.env
+
+# Dossiers non publiés
+
+
+# Backup of nested repository metadata
+electron-apps/.git.backup/
+# Ignorer le dossier de projet interne non souhaité
+electron-apps/

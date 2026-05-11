@@ -1,0 +1,28 @@
+/* Styles spécifiques à App */
+/* (les styles généraux body, h1... sont dans styles.css) */
+.input-row {
+display: flex;
+gap: 8px;
+margin-bottom: 24px;
+}
+.input-row input {
+flex: 1;
+padding: 8px;
+font-size: 14px;
+border: 1px solid #ccc;
+border-radius: 4px;
+}
+.input-row button {
+padding: 8px 16px;
+font-size: 14px;
+cursor: pointer;
+}
+#todo-list {
+list-style: none;
+padding: 0;
+margin: 0;
+}
+.empty {
+    color: #aaa;
+font-style: italic;
+}

@@ -1,0 +1,15 @@
+<div class="card">
+  <h1>Compteur</h1>
+
+  <!-- [value] : liaison descendante — passe count() à CounterDisplay via @Input -->
+  <app-counter-display [value]="count()" />
+
+  <!-- (incremented) : liaison montante — reçoit l'événement de CounterButtons via @Output -->
+  <app-counter-buttons
+    (decremented)="decrement()"
+    (resetted)="reset()"
+    (incremented)="increment()"
+  />
+
+  <p class="badge">Sauvegardé en fichier JSON</p>
+</div>

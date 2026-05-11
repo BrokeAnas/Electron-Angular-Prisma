@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Séance 6 — Electron</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Particules en arrière-plan -->
+<canvas id="bg-canvas"></canvas>
+
+<div class="page">
+
+  <!-- ══════════════════════════════════════
+       HERO
+  ══════════════════════════════════════ -->
+  <section class="hero">
+    <p class="hero-eyebrow">Séance 6 · Bachelier Dev Web</p>
+
+    <h1 class="hero-title">
+      Bienvenue dans<br>
+      <span class="word-electron">Electron</span>
+    </h1>
+
+    <p class="hero-sub">
+      Construire des applications desktop avec les technologies du web.
+      Processus, sécurité, IPC — tout depuis zéro.
+    </p>
+
+    <div class="hero-badges">
+      <span class="badge">Main Process</span>
+      <span class="badge">Renderer Process</span>
+      <span class="badge">Preload</span>
+      <span class="badge">contextBridge</span>
+      <span class="badge">IPC</span>
+      <span class="badge">Node.js</span>
+      <span class="badge">Chromium</span>
+    </div>
+
+    <div class="hero-scroll">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+      Scroll
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       ARCHITECTURE
+  ══════════════════════════════════════ -->
+  <section class="section reveal">
+    <p class="section-label">Architecture</p>
+    <h2 class="section-title">Deux processus,<br>un seul exécutable</h2>
+    <p class="section-desc">
+      Electron embarque Chromium pour l'interface et Node.js pour le système
+      dans un seul binaire. Ils ne se parlent jamais directement.
+    </p>
+
+    <div class="arch-grid">
+
+      <div class="arch-card main-p">
+        <div class="arch-card-icon">⚙️</div>
+        <h3>Main Process</h3>
+        <p class="file">main.js</p>
+        <ul>
+          <li>Démarre l'application</li>
+          <li>Crée les fenêtres</li>
+          <li>Accède aux fichiers &amp; DB</li>
+          <li>Un seul dans toute l'app</li>
+          <li>Analogie : serveur Express</li>
+        </ul>
+      </div>
+
+      <div class="arch-card preload">
+        <div class="arch-card-icon">🔒</div>
+        <h3>Preload</h3>
+        <p class="file">preload.js</p>
+        <ul>
+          <li>S'exécute avant le renderer</li>
+          <li>Accès à ipcRenderer</li>
+          <li>Expose une API contrôlée</li>
+          <li>Le renderer ne voit jamais ipcRenderer</li>
+          <li>Analogie : sas de sécurité</li>
+        </ul>
+      </div>
+
+      <div class="arch-card renderer">
+        <div class="arch-card-icon">🖥️</div>
+        <h3>Renderer Process</h3>
+        <p class="file">renderer/index.html + app.js</p>
+        <ul>
+          <li>Affiche l'interface (Chromium)</li>
+          <li>Gère les clics et le DOM</li>
+          <li>Un par fenêtre</li>
+          <li>Jamais accès à Node.js</li>
+          <li>Analogie : frontend Angular</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="sep">
+
+  <!-- ══════════════════════════════════════
+       FLUX IPC
+  ══════════════════════════════════════ -->
+  <section class="flow-section reveal">
+    <p class="section-label" style="text-align:center">Flux de données</p>
+    <h2 class="section-title" style="text-align:center; margin-bottom:.75rem">Comment ils se parlent</h2>
+    <p class="section-desc" style="text-align:center; margin:0 auto 2.5rem">
+      IPC (Inter-Process Communication) — comme un appel HTTP, mais en local.
+    </p>
+
+    <div class="flow-box">
+      <div class="flow-box-header">
+        <div class="dot r"></div>
+        <div class="dot y"></div>
+        <div class="dot g"></div>
+      </div>
+      <div class="flow-body">
+<span class="fr">renderer/app.js</span>
+  <span class="fa">└─</span> window.counterService.increment()
+       <span class="fa">│  (exposé par contextBridge)</span>
+       <span class="fa">▼</span>
+<span class="fp">preload.js</span>
+  <span class="fa">└─</span> ipcRenderer.invoke(<span class="fr">'counter:increment'</span>)
+       <span class="fa">│  (traverse le pont sécurisé)</span>
+       <span class="fa">▼</span>
+<span class="fm">main.js</span>
+  <span class="fa">└─</span> ipcMain.handle(<span class="fr">'counter:increment'</span>, () => ++count)
+       <span class="fa">│  (retourne la valeur)</span>
+       <span class="fa">▲</span>
+<span class="fp">preload.js</span>
+  <span class="fa">└─</span> Promise résolue
+       <span class="fa">▲</span>
+<span class="fr">renderer/app.js</span>
+  <span class="fa">└─</span> <span class="fm">const</span> count = <span class="fm">await</span> window.counterService.increment()
+      </div>
+    </div>
+  </section>
+
+  <hr class="sep">
+
+  <!-- ══════════════════════════════════════
+       CONCEPTS CLÉS
+  ══════════════════════════════════════ -->
+  <section class="section reveal">
+    <p class="section-label">Au programme</p>
+    <h2 class="section-title">Ce qu'on va construire</h2>
+    <p class="section-desc">De l'installation à la persistance des données — étape par étape.</p>
+
+    <div class="concepts-grid">
+      <div class="concept-card">
+        <p class="concept-num">01</p>
+        <h4>Installation</h4>
+        <p>npm init · npm install electron --save-dev · configurer package.json</p>
+      </div>
+      <div class="concept-card">
+        <p class="concept-num">02</p>
+        <h4>Créer la fenêtre</h4>
+        <p>BrowserWindow · webPreferences · contextIsolation · nodeIntegration</p>
+      </div>
+      <div class="concept-card">
+        <p class="concept-num">03</p>
+        <h4>Sécuriser avec Preload</h4>
+        <p>contextBridge.exposeInMainWorld · exposer uniquement ce qu'on choisit</p>
+      </div>
+      <div class="concept-card">
+        <p class="concept-num">04</p>
+        <h4>Communication IPC</h4>
+        <p>ipcMain.handle · ipcRenderer.invoke · async / await</p>
+      </div>
+      <div class="concept-card">
+        <p class="concept-num">05</p>
+        <h4>Persistance JSON</h4>
+        <p>fs.readFileSync · fs.writeFileSync · données qui survivent aux redémarrages</p>
+      </div>
+      <div class="concept-card">
+        <p class="concept-num">06</p>
+        <h4>Mini TP</h4>
+        <p>Compteur complet : +1 · −1 · Reset · état géré côté main uniquement</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       RÈGLE D'OR
+  ══════════════════════════════════════ -->
+  <div class="rule-banner reveal">
+    <p class="rule-label">⚠ Règle d'or</p>
+    <p class="rule-text">
+      Le renderer ne touche <em>jamais</em> la base de données. Jamais.
+    </p>
+    <p class="rule-sub">
+      Exactement comme votre frontend Angular ne touche pas directement MariaDB.
+    </p>
+  </div>
+
+  <footer>
+    Séance 6 — Electron · Processus · Sécurité · IPC
+  </footer>
+
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
