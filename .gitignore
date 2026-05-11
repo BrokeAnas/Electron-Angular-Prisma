@@ -1,0 +1,5 @@
+.DS_Store
+node_modules/
+**/.git
+**/.git.backup
+electron-apps/electron-apps/
